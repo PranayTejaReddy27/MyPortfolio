@@ -14,6 +14,7 @@ function skills(){
         { skill: "Flask", link: "https://img.icons8.com/?size=78&id=5mbMwDZ796xj&format=png" },
         { skill: "HTML", link: "https://img.icons8.com/color/78/000000/html-5.png" },
         { skill: "CSS", link: "https://img.icons8.com/color/78/000000/css3.png" },
+        { skill: "MySQL", link: "https://img.icons8.com/?size=78&id=rgPSE6nAB766&format=png" },
         { skill: "Machine Learning", link: "https://img.icons8.com/?size=78&id=fTkqveCX0blI&format=png" }
       ];
       let skillDiv = document.getElementById("skill-div");
@@ -29,6 +30,42 @@ function skills(){
       } 
 }
 skills();
+
+// Function to fetch all projects from a GitHub user's repository
+function getAllGitHubProjects(username) {
+    // Construct the URL for the GitHub API endpoint to list repositories
+    let url = `https://api.github.com/users/${username}/repos`;
+
+    // Fetch data from the GitHub API
+    fetch(url)
+        .then(response => {
+            // Check if the response is successful
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // Parse the response as JSON
+            return response.json();
+        })
+        .then(data => {
+            // Handle the retrieved project data
+            let projectList = document.getElementById("projects-ul");
+            data.forEach(repo => {
+                let listItem = document.createElement("li");
+                listItem.textContent = repo.name;
+                projectList.appendChild(listItem);
+            });
+            
+        })
+        .catch(error => {
+            // Handle any errors that occur during the fetch operation
+            console.error('Error fetching GitHub projects:', error);
+        });
+}
+
+// Example usage: Retrieve all projects owned by 'MyUsername'
+getAllGitHubProjects('PranayTejaReddy27');
+
+
 
 
 
